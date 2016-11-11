@@ -4,6 +4,11 @@
   - cache
   - os-pre-req
   - apigee-pre-req
+  - ms
+  - ds
+  - qpid
+  - pgmaster
+  - pgstandby
 
 - include: configuration/load-opdk-credentials.yml
   vars:
@@ -134,6 +139,13 @@
   tags:
   - qpid
 
+- include: components/opdk-setup-qpid-add.yml
+  vars:
+    hosts: 'dc-2-qpid'
+  tags:
+  - qpid
+  - qpid-add
+
 - include: components/opdk-setup-postgres-common.yml
   vars:
     hosts: 'dc-2-pgmaster'
@@ -142,6 +154,15 @@
   tags:
   - pgmaster
 
+- include: components/opdk-setup-postgresql-add.yml
+  vars:
+    hosts: 'dc-2-pgmaster'
+    pgmaster_group_name: 'dc-2-pgmaster'
+    pgstandby_group_name: 'dc-2-pgstandby'
+  tags:
+  - pgmaster
+  - pgmaster-add
+
 - include: components/opdk-setup-postgres-common.yml
   vars:
     hosts: 'dc-2-pgstandby'
@@ -149,6 +170,15 @@
     jdk_version: '1.8'
   tags:
   - pgstandby
+
+- include: components/opdk-setup-postgresql-add.yml
+  vars:
+    hosts: 'dc-2-pgstandby'
+    pgmaster_group_name: 'dc-2-pgmaster'
+    pgstandby_group_name: 'dc-2-pgstandby'
+  tags:
+  - pgstandby
+  - pgstandby-add
 
 - include: configuration/opdk-setup-org-config.yml
   vars:
@@ -179,5 +209,87 @@
   - status
 
 - include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-1-ds
   tags:
   - logs
+  - dc-1
+
+- include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-2-ds
+  tags:
+  - logs
+  - dc-2
+
+- include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-1-ms
+  tags:
+  - logs
+  - dc-1
+
+- include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-2-ms
+  tags:
+  - logs
+  - dc-2
+
+- include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-1-rmp
+  tags:
+  - logs
+  - dc-1
+
+- include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-2-rmp
+  tags:
+  - logs
+  - dc-2
+
+- include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-1-qpid
+  tags:
+  - logs
+  - dc-1
+
+- include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-2-qpid
+  tags:
+  - logs
+  - dc-2
+
+- include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-1-pgmaster
+  tags:
+  - logs
+  - dc-1
+
+- include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-2-pgmaster
+  tags:
+  - logs
+  - dc-2
+
+- include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-1-pgstandby
+  tags:
+  - logs
+  - dc-1
+
+- include: validations/opdk-setup-log-files.yml
+  vars:
+    hosts: dc-2-pgstandby
+  tags:
+  - logs
+  - dc-2
+
+

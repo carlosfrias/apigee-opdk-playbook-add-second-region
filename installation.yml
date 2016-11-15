@@ -87,25 +87,11 @@
   tags:
   - ms
 
-- include: configuration/opdk-set-reachable.yml
-  vars:
-    hosts: 'dc-2-rmp'
-    reachability: 'false'
-  tags:
-  - rmp
-
 - include: components/opdk-install-component.yml
   vars:
     hosts: 'dc-2-rmp'
     component_profile: 'rmp'
     jdk_version: '1.8'
-  tags:
-  - rmp
-
-- include: configuration/opdk-set-reachable.yml
-  vars:
-    hosts: 'dc-2-rmp'
-    reachability: 'true'
   tags:
   - rmp
 
@@ -154,15 +140,6 @@
   tags:
   - pgmaster
 
-- include: components/opdk-setup-postgresql-add.yml
-  vars:
-    hosts: 'dc-2-pgmaster'
-    pgmaster_group_name: 'dc-2-pgmaster'
-    pgstandby_group_name: 'dc-2-pgstandby'
-  tags:
-  - pgmaster
-  - pgmaster-add
-
 - include: components/opdk-setup-postgres-common.yml
   vars:
     hosts: 'dc-2-pgstandby'
@@ -173,12 +150,12 @@
 
 - include: components/opdk-setup-postgresql-add.yml
   vars:
-    hosts: 'dc-2-pgstandby'
+    hosts: 'dc-2-pgmaster'
     pgmaster_group_name: 'dc-2-pgmaster'
     pgstandby_group_name: 'dc-2-pgstandby'
   tags:
-  - pgstandby
-  - pgstandby-add
+  - pgmaster
+  - pgmaster-add
 
 - include: configuration/opdk-setup-org-config.yml
   vars:

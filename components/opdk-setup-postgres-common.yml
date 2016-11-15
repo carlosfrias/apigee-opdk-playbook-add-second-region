@@ -22,10 +22,4 @@
   serial: 1
   roles:
   - apigee-opdk-setup-default-settings
-  tasks:
-  - name: Obtain server self report
-    opdk_server_self:
-      server_type: 'ps'
-      username: '{{ opdk_user_email }}'
-      password: '{{ opdk_user_pass }}'
-    ignore_errors: yes
+  - { role: apigee-opdk-server-self, server_type: 'ps'}

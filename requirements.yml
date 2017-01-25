@@ -74,3 +74,7 @@
 - src: https://github.com/carlosfrias/apigee-opdk-cassandra-client-update
 
 - src: https://github.com/carlosfrias/apigee-opdk-start-components.git
+
+- src: https://github.com/carlosfrias/apigee-opdk-setup-qpid-add.git
+
+- src: https://github.com/carlosfrias/apigee-opdk-setup-postgresql-add.git

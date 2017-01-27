@@ -9,6 +9,8 @@
   - qpid
   - pgmaster
   - pgstandby
+  - rmp
+  - pg
 
 - include: configuration/load-opdk-credentials.yml
   vars:
@@ -39,12 +41,20 @@
     opdk_ldap_type: '2'
   tags:
   - apigee-pre-req
+  - ds
+  - ms
+  - rmp
+  - qpid
+  - pg
+  - pgstandby
+  - pgmaster
 
 - include: components/opdk-install-component.yml
   vars:
     hosts: 'dc-2-ds'
     component_profile: 'ds'
     jdk_version: '1.8'
+    opdk_ldap_type: '2'
   tags:
   - ds
 
@@ -69,6 +79,7 @@
     hosts: 'dc-1-ms'
     component_profile: 'ms'
     jdk_version: '1.8'
+    opdk_ldap_type: '2'
   tags:
   - ms
 
@@ -84,6 +95,7 @@
     hosts: 'dc-2-ms'
     component_profile: 'ms'
     jdk_version: '1.8'
+    opdk_ldap_type: '2'
   tags:
   - ms
 
@@ -138,6 +150,7 @@
     pg_component: 'master'
     jdk_version: '1.8'
   tags:
+  - pg
   - pgmaster
 
 - include: components/opdk-setup-postgres-common.yml
@@ -146,6 +159,7 @@
     pg_component: 'standby'
     jdk_version: '1.8'
   tags:
+  - pg
   - pgstandby
 
 - include: components/opdk-setup-postgresql-add.yml
@@ -154,6 +168,7 @@
     pgmaster_group_name: 'dc-2-pgmaster'
     pgstandby_group_name: 'dc-2-pgstandby'
   tags:
+  - pg
   - pgmaster
   - pgmaster-add
 

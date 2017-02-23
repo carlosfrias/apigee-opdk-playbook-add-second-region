@@ -3,6 +3,7 @@
   vars:
     opdk_region: dc-1
   roles:
+  - apigee-opdk-setup-default-settings
   - apigee-opdk-cassandra-rebuild
   tags:
   - c-rebuild

@@ -9,6 +9,7 @@
   - qpid
   - pgmaster
   - pgstandby
+  - analytics
   - rmp
   - pg
 
@@ -48,6 +49,7 @@
   - pg
   - pgstandby
   - pgmaster
+  - analytics
 
 - include: components/opdk-install-component.yml
   vars:
@@ -136,6 +138,7 @@
     jdk_version: '1.8'
   tags:
   - qpid
+  - analytics
 
 - include: components/opdk-setup-qpid-add.yml
   vars:
@@ -143,6 +146,7 @@
   tags:
   - qpid
   - qpid-add
+  - analytics
 
 - include: components/opdk-setup-postgres-common.yml
   vars:
@@ -152,6 +156,7 @@
   tags:
   - pg
   - pgmaster
+  - analytics
 
 - include: components/opdk-setup-postgres-common.yml
   vars:
@@ -161,6 +166,7 @@
   tags:
   - pg
   - pgstandby
+  - analytics
 
 - include: components/opdk-setup-postgresql-add.yml
   vars:
@@ -171,6 +177,7 @@
   - pg
   - pgmaster
   - pgmaster-add
+  - analytics
 
 - include: configuration/opdk-setup-org-config.yml
   vars:

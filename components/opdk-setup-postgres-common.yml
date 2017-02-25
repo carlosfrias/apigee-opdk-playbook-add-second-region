@@ -5,7 +5,6 @@
   - ~/.apigee/credentials.yml
   roles:
   - apigee-opdk-enable-swap
-  - apigee-opdk-setup-default-settings
   - apigee-opdk-setup-apigee-user
   - apigee-opdk-setup-os-postgres
   - apigee-opdk-setup-postgres-config
@@ -28,5 +27,4 @@
 - hosts: '{{ hosts }}'
   serial: 1
   roles:
-  - apigee-opdk-setup-default-settings
   - { role: apigee-opdk-server-self, server_type: 'ps'}

@@ -2,24 +2,6 @@
 - include: configuration/update_cache.yml
   tags:
   - cache
-  - os-pre-req
-  - apigee-pre-req
-  - ms
-  - ds
-  - qpid
-  - pgmaster
-  - pgstandby
-  - analytics
-  - rmp
-  - pg
-
-- include: configuration/load-opdk-credentials.yml
-  vars:
-    hosts: 'planet'
-  tags:
-  - credentials
-  - os-pre-req
-  - apigee-pre-req
 
 - include: configuration/opdk-setup-os.yml
   vars:
@@ -42,14 +24,6 @@
     opdk_ldap_type: '2'
   tags:
   - apigee-pre-req
-  - ds
-  - ms
-  - rmp
-  - qpid
-  - pg
-  - pgstandby
-  - pgmaster
-  - analytics
 
 - include: components/opdk-install-component.yml
   vars:
@@ -58,7 +32,7 @@
     jdk_version: '1.8'
     opdk_ldap_type: '2'
   tags:
-  - ds
+  - dc-2-ds
 
 - include: components/opdk-install-component.yml
   vars:
@@ -67,14 +41,14 @@
     jdk_version: '1.8'
     opdk_ldap_type: '2'
   tags:
-  - ds
+  - dc-1-ds
 
 - include: components/opdk-cassandra-client-update.yml
   vars:
      hosts: 'dc-1-ms'
      jdk_version: '1.8'
   tags:
-  - ms
+  - dc-1-ms
 
 - include: components/opdk-install-component.yml
   vars:
@@ -83,14 +57,14 @@
     jdk_version: '1.8'
     opdk_ldap_type: '2'
   tags:
-  - ms
+  - dc-1-ms
 
 - include: components/opdk-cassandra-rebuild.yml
   vars:
     hosts: 'dc-2-ds'
     jdk_version: '1.8'
   tags:
-  - ms
+  - dc-2-ms
 
 - include: components/opdk-install-component.yml
   vars:
@@ -99,7 +73,7 @@
     jdk_version: '1.8'
     opdk_ldap_type: '2'
   tags:
-  - ms
+  - dc-2-ms
 
 - include: components/opdk-install-component.yml
   vars:
@@ -107,14 +81,14 @@
     component_profile: 'rmp'
     jdk_version: '1.8'
   tags:
-  - rmp
+  - dc-2-rmp
 
 - include: configuration/opdk-set-reachable.yml
   vars:
     hosts: 'dc-1-rmp'
     reachability: 'false'
   tags:
-  - rmp
+  - dc-1-rmp
 
 - include: components/opdk-install-component.yml
   vars:
@@ -122,14 +96,14 @@
     component_profile: 'rmp'
     jdk_version: '1.8'
   tags:
-  - rmp
+  - dc-1-rmp
 
 - include: configuration/opdk-set-reachable.yml
   vars:
     hosts: 'dc-1-rmp'
     reachability: 'true'
   tags:
-  - rmp
+  - dc-1-rmp
 
 - include: components/opdk-install-component.yml
   vars:
@@ -137,16 +111,13 @@
     component_profile: 'qs'
     jdk_version: '1.8'
   tags:
-  - qpid
-  - analytics
+  - dc-2-qpid
 
 - include: components/opdk-setup-qpid-add.yml
   vars:
     hosts: 'dc-2-qpid'
   tags:
-  - qpid
-  - qpid-add
-  - analytics
+  - dc-2-qpid-registration
 
 - include: components/opdk-setup-postgres-common.yml
   vars:
@@ -154,9 +125,7 @@
     pg_component: 'master'
     jdk_version: '1.8'
   tags:
-  - pg
-  - pgmaster
-  - analytics
+  - dc-2-pgmaster
 
 - include: components/opdk-setup-postgres-common.yml
   vars:
@@ -164,9 +133,7 @@
     pg_component: 'standby'
     jdk_version: '1.8'
   tags:
-  - pg
-  - pgstandby
-  - analytics
+  - dc-2-pgstandby
 
 - include: components/opdk-setup-postgresql-add.yml
   vars:
@@ -174,16 +141,7 @@
     pgmaster_group_name: 'dc-2-pgmaster'
     pgstandby_group_name: 'dc-2-pgstandby'
   tags:
-  - pg
-  - pgmaster
-  - pgmaster-add
-  - analytics
-
-- include: configuration/opdk-setup-org-config.yml
-  vars:
-    hosts: 'dc-2-ms'
-  tags:
-  - org
+  - dc-2-pg-registration
 
 - include: configuration/opdk-setup-org.yml
   vars:

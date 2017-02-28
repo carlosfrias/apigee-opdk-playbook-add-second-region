@@ -2,6 +2,8 @@
 - hosts: '{{ hosts }}'
   vars_files:
   - ~/.apigee/credentials.yml
-  strategy: free
+  serial: 1
   roles:
+  - apigee-opdk-setup-org-config
   - apigee-opdk-setup-org
+

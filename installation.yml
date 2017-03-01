@@ -33,6 +33,7 @@
     opdk_ldap_type: '2'
   tags:
   - dc-2-ds
+  - ds
 
 - include: components/opdk-install-component.yml
   vars:
@@ -42,6 +43,7 @@
     opdk_ldap_type: '2'
   tags:
   - dc-1-ds
+  - ds
 
 - include: components/opdk-cassandra-client-update.yml
   vars:
@@ -49,6 +51,7 @@
      jdk_version: '1.8'
   tags:
   - dc-1-ms
+  - ms
 
 - include: components/opdk-install-component.yml
   vars:
@@ -58,6 +61,7 @@
     opdk_ldap_type: '2'
   tags:
   - dc-1-ms
+  - ms
 
 - include: components/opdk-cassandra-rebuild.yml
   vars:
@@ -65,6 +69,7 @@
     jdk_version: '1.8'
   tags:
   - dc-2-ms
+  - ms
 
 - include: components/opdk-install-component.yml
   vars:
@@ -74,6 +79,7 @@
     opdk_ldap_type: '2'
   tags:
   - dc-2-ms
+  - ms
 
 - include: components/opdk-install-component.yml
   vars:
@@ -82,6 +88,7 @@
     jdk_version: '1.8'
   tags:
   - dc-2-rmp
+  - rmp
 
 - include: configuration/opdk-set-reachable.yml
   vars:
@@ -89,6 +96,7 @@
     reachability: 'false'
   tags:
   - dc-1-rmp
+  - rmp
 
 - include: components/opdk-install-component.yml
   vars:
@@ -97,6 +105,7 @@
     jdk_version: '1.8'
   tags:
   - dc-1-rmp
+  - rmp
 
 - include: configuration/opdk-set-reachable.yml
   vars:
@@ -104,6 +113,7 @@
     reachability: 'true'
   tags:
   - dc-1-rmp
+  - rmp
 
 - include: components/opdk-install-component.yml
   vars:
@@ -112,12 +122,14 @@
     jdk_version: '1.8'
   tags:
   - dc-2-qpid
+  - qpid
 
 - include: components/opdk-setup-qpid-add.yml
   vars:
     hosts: 'dc-2-qpid'
   tags:
   - dc-2-qpid-registration
+  - qpid
 
 - include: components/opdk-setup-postgres-common.yml
   vars:
@@ -126,6 +138,8 @@
     jdk_version: '1.8'
   tags:
   - dc-2-pgmaster
+  - pgmaster
+  - pg
 
 - include: components/opdk-setup-postgres-common.yml
   vars:
@@ -134,6 +148,8 @@
     jdk_version: '1.8'
   tags:
   - dc-2-pgstandby
+  - pg
+  - pgstandby
 
 - include: components/opdk-setup-postgresql-add.yml
   vars:
@@ -142,6 +158,8 @@
     pgstandby_group_name: 'dc-2-pgstandby'
   tags:
   - dc-2-pg-registration
+  - pg
+  - pg-add
 
 - include: configuration/opdk-setup-org.yml
   vars:

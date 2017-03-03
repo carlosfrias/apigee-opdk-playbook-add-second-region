@@ -1,5 +1,7 @@
 ---
-- hosts: planet
+- name: Update full cache
+  hosts: planet
+  gather_facts: no
   vars_files:
   - ~/.apigee/credentials.yml
   pre_tasks:

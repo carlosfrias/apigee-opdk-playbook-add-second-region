@@ -1,6 +1,7 @@
 ---
 - hosts: rmp
   serial: 1
+  gather_facts: no
   vars_files:
   - ~/.apigee/credentials.yml
   tasks:
@@ -24,6 +25,7 @@
 
 - hosts: pg
   serial: 1
+  gather_facts: no
   vars_files:
   - ~/.apigee/credentials.yml
   tasks:
@@ -39,6 +41,7 @@
 
 - hosts: qpid
   serial: 1
+  gather_facts: no
   vars_files:
   - ~/.apigee/credentials.yml
   tasks:
@@ -54,6 +57,7 @@
 
 - hosts: ms
   serial: 1
+  gather_facts: no
   vars_files:
   - ~/.apigee/credentials.yml
   tasks:

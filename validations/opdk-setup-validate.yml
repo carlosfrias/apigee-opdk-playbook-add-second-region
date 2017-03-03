@@ -1,5 +1,6 @@
 ---
 - hosts: '{{ hosts }}'
+  gather_facts: no
   serial: 1
   roles:
   - apigee-opdk-setup-validate
@@ -7,6 +8,7 @@
   - validate
 
 - hosts: '{{ hosts }}'
+  gather_facts: no
   serial: 1
   roles:
   - apigee-opdk-setup-validate-cleanup

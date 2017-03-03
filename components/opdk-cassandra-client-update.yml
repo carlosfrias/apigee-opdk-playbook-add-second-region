@@ -1,5 +1,7 @@
 ---
-- hosts: '{{ hosts }}'
+- name: Update cassandra clients
+  hosts: '{{ hosts }}'
+  gather_facts: no
   roles:
   - apigee-opdk-start-components
   - apigee-opdk-cassandra-client-update

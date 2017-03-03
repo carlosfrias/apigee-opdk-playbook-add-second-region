@@ -1,5 +1,7 @@
 ---
-- hosts: '{{ hosts }}'
+- name: Setup component installer and install component
+  hosts: '{{ hosts }}'
+  gather_facts: no
   serial: 1
   roles:
   - apigee-opdk-setup-component-installer

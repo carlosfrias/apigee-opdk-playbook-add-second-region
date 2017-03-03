@@ -1,5 +1,7 @@
 ---
-- hosts: '{{ hosts }}'
+- name: Configure OS for Postgres
+  hosts: '{{ hosts }}'
+  gather_facts: no
   strategy: free
   vars_files:
   - ~/.apigee/credentials.yml
@@ -9,22 +11,27 @@
   - apigee-opdk-setup-os-postgres
   - apigee-opdk-setup-postgres-config
 
-- include: opdk-install-component.yml
+- name: Install Postgres component installation
+  include: opdk-install-component.yml
   vars:
     hosts: '{{ hosts }}'
     component_profile: 'ps'
 
-- include: 'opdk-setup-postgres-master.yml'
+- name: Configure Postgres master
+  include: 'opdk-setup-postgres-master.yml'
   when: pg_component is defined and pg_component == 'master'
   tags:
   - apigee-component
 
-- include: 'opdk-setup-postgres-standby.yml'
+- name: Configure Postgres standby
+  include: 'opdk-setup-postgres-standby.yml'
   when: pg_component is defined and pg_component == 'standby'
   tags:
   - apigee-component
 
-- hosts: '{{ hosts }}'
+- name: Report Postgres server report
+  hosts: '{{ hosts }}'
+  gather_facts: no
   serial: 1
   roles:
   - { role: apigee-opdk-server-self, server_types: ['ps'] }

@@ -1,5 +1,7 @@
 ---
-- hosts: '{{ hosts }}'
+- name: Register Postgres
+  hosts: '{{ hosts }}'
+  gather_facts: no
   vars_files:
   - ~/.apigee/credentials.yml
   roles:

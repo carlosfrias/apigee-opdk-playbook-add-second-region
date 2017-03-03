@@ -1,5 +1,7 @@
 ---
-- hosts: '{{ hosts }}'
+- name: Create apigee user if not already there
+  hosts: '{{ hosts }}'
+  gather_facts: no
   strategy: free
   vars_files:
   - ~/.apigee/credentials.yml
@@ -9,7 +11,9 @@
   - apigee-user
   - apigee-pre-req
 
-- hosts: '{{ hosts }}'
+- name: Update limits.conf
+  hosts: '{{ hosts }}'
+  gather_facts: no
   strategy: free
   vars_files:
   - ~/.apigee/credentials.yml
@@ -19,16 +23,20 @@
   - apigee-pre-req
   - apigee-tuning
 
-- hosts: '{{ hosts }}'
+- name: Setup openjdk
+  hosts: '{{ hosts }}'
   strategy: free
+  gather_facts: no
   roles:
   - apigee-opdk-setup-openjdk
   tags:
   - apigee-pre-req
   - openjdk
 
-- hosts: '{{ hosts }}'
+- name: Configure the bootstrap
+  hosts: '{{ hosts }}'
   strategy: free
+  gather_facts: no
   vars_files:
   - ~/.apigee/credentials.yml
   roles:
@@ -37,8 +45,10 @@
   - apigee-pre-req
   - apigee-bootstrap
 
-- hosts: '{{ hosts }}'
+- name: Construct silent installation configuration file
+  hosts: '{{ hosts }}'
   strategy: free
+  gather_facts: no
   vars_files:
   - ~/.apigee/credentials.yml
   roles:

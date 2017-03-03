@@ -1,5 +1,6 @@
 ---
-- hosts: '{{ hosts }}'
+- name: Configure OS for Edge
+  hosts: '{{ hosts }}'
   become: yes
   gather_facts: no
   strategy: free

@@ -1,5 +1,7 @@
 ---
-- hosts: '{{ hosts }}'
+- name: Set reachability flag
+  hosts: '{{ hosts }}'
+  gather_facts: no
   strategy: free
   vars_files:
   - ~/.apigee/credentials.yml

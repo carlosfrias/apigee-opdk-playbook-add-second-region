@@ -1,5 +1,7 @@
 ---
-- hosts: '{{ hosts }}'
+- name: Rebuild cassandra
+  hosts: '{{ hosts }}'
+  gather_facts: no
   vars:
     opdk_region: dc-1
   roles:

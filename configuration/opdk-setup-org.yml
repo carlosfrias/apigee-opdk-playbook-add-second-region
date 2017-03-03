@@ -1,5 +1,7 @@
 ---
-- hosts: '{{ hosts }}'
+- name: Set up organization
+  hosts: '{{ hosts }}'
+  gather_facts: no
   vars_files:
   - ~/.apigee/credentials.yml
   serial: 1

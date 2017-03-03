@@ -1,23 +1,28 @@
 ---
-- include: configuration/update_cache.yml
+- name: Update local cache
+  include: configuration/update_cache.yml
   tags:
   - cache
 
-- include: configuration/opdk-setup-os.yml
+- name: Setup OS
+  include: configuration/opdk-setup-os.yml
   vars:
     hosts: 'planet'
   tags:
   - os
   - os-pre-req
 
-- include: configuration/update-user.yml
+- name: Update user with root privilege
+  include: configuration/update-user.yml
   vars:
     hosts: 'planet'
     user: 'root'
   tags:
   - root-user
+  - os-pre-req
 
-- include: components/opdk-pre-requisites.yml
+- name: Setup Edge pre-requisites
+  include: components/opdk-pre-requisites.yml
   vars:
     hosts: 'planet'
     jdk_version: '1.8'
@@ -25,7 +30,8 @@
   tags:
   - apigee-pre-req
 
-- include: components/opdk-install-component.yml
+- name: Setup Cassandra & Zookeeper in DC-2
+  include: components/opdk-install-component.yml
   vars:
     hosts: 'dc-2-ds'
     component_profile: 'ds'
@@ -35,7 +41,8 @@
   - dc-2-ds
   - ds
 
-- include: components/opdk-install-component.yml
+- name: Refresh Cassandra & Zookeeper in DC-1 with DC-2 setup
+  include: components/opdk-install-component.yml
   vars:
     hosts: 'dc-1-ds'
     component_profile: 'ds'
@@ -45,7 +52,8 @@
   - dc-1-ds
   - ds
 
-- include: components/opdk-cassandra-client-update.yml
+- name: Update Cassandra client on DC-1
+  include: components/opdk-cassandra-client-update.yml
   vars:
      hosts: 'dc-1-ms'
      jdk_version: '1.8'
@@ -53,7 +61,8 @@
   - dc-1-ms
   - ms
 
-- include: components/opdk-install-component.yml
+- name: Refresh Management Server on DC-1
+  include: components/opdk-install-component.yml
   vars:
     hosts: 'dc-1-ms'
     component_profile: 'ms'
@@ -63,7 +72,8 @@
   - dc-1-ms
   - ms
 
-- include: components/opdk-cassandra-rebuild.yml
+- name: Rebuild Cassandra on DC-2
+  include: components/opdk-cassandra-rebuild.yml
   vars:
     hosts: 'dc-2-ds'
     jdk_version: '1.8'
@@ -71,7 +81,8 @@
   - dc-2-ms
   - ms
 
-- include: components/opdk-install-component.yml
+- name: Setup Management Server on DC-2
+  include: components/opdk-install-component.yml
   vars:
     hosts: 'dc-2-ms'
     component_profile: 'ms'
@@ -81,7 +92,8 @@
   - dc-2-ms
   - ms
 
-- include: components/opdk-install-component.yml
+- name: Setup RMP on DC-2
+  include: components/opdk-install-component.yml
   vars:
     hosts: 'dc-2-rmp'
     component_profile: 'rmp'
@@ -90,7 +102,8 @@
   - dc-2-rmp
   - rmp
 
-- include: configuration/opdk-set-reachable.yml
+- name: Unset reachable flag for RMP on DC-1
+  include: configuration/opdk-set-reachable.yml
   vars:
     hosts: 'dc-1-rmp'
     reachability: 'false'
@@ -98,7 +111,8 @@
   - dc-1-rmp
   - rmp
 
-- include: components/opdk-install-component.yml
+- name: Refresh the RMP setup on DC-1
+  include: components/opdk-install-component.yml
   vars:
     hosts: 'dc-1-rmp'
     component_profile: 'rmp'
@@ -107,7 +121,8 @@
   - dc-1-rmp
   - rmp
 
-- include: configuration/opdk-set-reachable.yml
+- name: Set reachable flag for RMP on DC-1
+  include: configuration/opdk-set-reachable.yml
   vars:
     hosts: 'dc-1-rmp'
     reachability: 'true'
@@ -115,7 +130,8 @@
   - dc-1-rmp
   - rmp
 
-- include: components/opdk-install-component.yml
+- name: Setup Qpid on DC-2
+  include: components/opdk-install-component.yml
   vars:
     hosts: 'dc-2-qpid'
     component_profile: 'qs'
@@ -124,14 +140,16 @@
   - dc-2-qpid
   - qpid
 
-- include: components/opdk-setup-qpid-add.yml
+- name: Register Qpid on DC-2
+  include: components/opdk-setup-qpid-add.yml
   vars:
     hosts: 'dc-2-qpid'
   tags:
   - dc-2-qpid-registration
   - qpid
 
-- include: components/opdk-setup-postgres-common.yml
+- name: Setup Postgres Master on DC-2
+  include: components/opdk-setup-postgres-common.yml
   vars:
     hosts: 'dc-2-pgmaster'
     pg_component: 'master'
@@ -141,7 +159,8 @@
   - pgmaster
   - pg
 
-- include: components/opdk-setup-postgres-common.yml
+- name: Setup Postgres Standby on DC-2
+  include: components/opdk-setup-postgres-common.yml
   vars:
     hosts: 'dc-2-pgstandby'
     pg_component: 'standby'
@@ -151,7 +170,8 @@
   - pg
   - pgstandby
 
-- include: components/opdk-setup-postgresql-add.yml
+- name: Register analytics cluster on DC-2
+  include: components/opdk-setup-postgresql-add.yml
   vars:
     hosts: 'dc-2-pgmaster'
     pgmaster_group_name: 'dc-2-pgmaster'
@@ -161,106 +181,122 @@
   - pg
   - pg-add
 
-- include: configuration/opdk-setup-org.yml
+- name: Setup org on DC-2
+  include: configuration/opdk-setup-org.yml
   vars:
     hosts: 'dc-2-ms'
   tags:
   - org
 
-- include: validations/opdk-setup-validate.yml
+- name: Validate RMP proxy functionality on DC-2
+  include: validations/opdk-setup-validate.yml
   vars:
     hosts: 'dc-2-rmp'
   tags:
   - validation
 
-- include: validations/opdk-internal-port-connectivity-validator.yml
+- name: Validate internal port connectivity
+  include: validations/opdk-internal-port-connectivity-validator.yml
   tags:
   - port-validator
 
-- include: validations/opdk-setup-status.yml
+- name: Report status for all nodes
+  include: validations/opdk-setup-status.yml
   vars:
     hosts: 'planet'
   tags:
   - status
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-1-DS
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-1-ds
   tags:
   - logs
   - dc-1
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-2-DS
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-2-ds
   tags:
   - logs
   - dc-2
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-1-MS
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-1-ms
   tags:
   - logs
   - dc-1
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-2-MS
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-2-ms
   tags:
   - logs
   - dc-2
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-1-RMP
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-1-rmp
   tags:
   - logs
   - dc-1
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-2-RMP
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-2-rmp
   tags:
   - logs
   - dc-2
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-1-QPID
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-1-qpid
   tags:
   - logs
   - dc-1
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-2-QPID
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-2-qpid
   tags:
   - logs
   - dc-2
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-1-PGMASTER
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-1-pgmaster
   tags:
   - logs
   - dc-1
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-2-PGMASTER
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-2-pgmaster
   tags:
   - logs
   - dc-2
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-1-PGSTANDBY
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-1-pgstandby
   tags:
   - logs
   - dc-1
 
-- include: validations/opdk-setup-log-files.yml
+- name: Download logs and configs from DC-2-PGSTANDBY
+  include: validations/opdk-setup-log-files.yml
   vars:
     hosts: dc-2-pgstandby
   tags:

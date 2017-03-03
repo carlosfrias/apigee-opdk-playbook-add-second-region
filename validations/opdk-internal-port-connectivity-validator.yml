@@ -1,38 +1,54 @@
 ---
-
-- hosts: rmp
+- name: Validate internal ports for MP
+  hosts: rmp
+  gather_facts: no
   roles:
   - apigee-internal-port-connectivity-validator-mp
 
-- hosts: ldap
+- name: Validate internal ports for LDAP
+  hosts: ldap
+  gather_facts: no
   roles:
   - apigee-internal-port-connectivity-validator-ldap
 
-- hosts: ds
+- name: Validate internal ports for Cassandra
+  hosts: ds
+  gather_facts: no
   roles:
   - apigee-internal-port-connectivity-validator-cassandra
 
-- hosts: ds
+- name: Validate internal ports for Zookeeper
+  hosts: ds
+  gather_facts: no
   roles:
   - apigee-internal-port-connectivity-validator-zookeeper
 
-- hosts: ms
+- name: Validate internal ports for Management Server
+  hosts: ms
+  gather_facts: no
   roles:
   - apigee-internal-port-connectivity-validator-ms
 
-- hosts: pg
+- name: Validate internal ports for Postgres
+  hosts: pg
+  gather_facts: no
   roles:
   - apigee-internal-port-connectivity-validator-postgres
 
-- hosts: rmp
+- name: Validate internal ports for Router and Message Processor
+  hosts: rmp
+  gather_facts: no
   roles:
   - apigee-internal-port-connectivity-validator-router
 
-- hosts: qpid
+- name: Validate internal ports for Qpid
+  hosts: qpid
+  gather_facts: no
   roles:
   - apigee-internal-port-connectivity-validator-qpid
 
-- hosts: ui
+- name: Validate internal ports for UI
+  hosts: ui
+  gather_facts: no
   roles:
   - apigee-internal-port-connectivity-validator-ui
-

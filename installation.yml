@@ -63,6 +63,7 @@
   tags:
   - dc-1-ms
   - ms
+  - cass_client
 
 - name: Refresh Management Server on DC-1
   include: components/opdk-install-component.yml

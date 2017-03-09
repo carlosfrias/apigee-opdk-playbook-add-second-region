@@ -1,58 +1,11 @@
 ---
-- name: Create apigee user if not already there
-  hosts: '{{ hosts }}'
-  gather_facts: no
-  strategy: free
-  vars_files:
-  - ~/.apigee/credentials.yml
-  roles:
-  - apigee-opdk-setup-apigee-user
-  tags:
-  - apigee-user
-  - apigee-pre-req
-
-- name: Update limits.conf
-  hosts: '{{ hosts }}'
-  gather_facts: no
-  strategy: free
-  vars_files:
-  - ~/.apigee/credentials.yml
-  roles:
-  - apigee-opdk-setup-os-limits
-  tags:
-  - apigee-pre-req
-  - apigee-tuning
-
-- name: Setup openjdk
-  hosts: '{{ hosts }}'
+- hosts: '{{ hosts }}'
   strategy: free
   gather_facts: no
   roles:
-  - apigee-opdk-setup-openjdk
-  tags:
-  - apigee-pre-req
-  - openjdk
-
-- name: Configure the bootstrap
-  hosts: '{{ hosts }}'
-  strategy: free
-  gather_facts: no
-  vars_files:
-  - ~/.apigee/credentials.yml
-  roles:
-  - apigee-opdk-setup-bootstrap
-  tags:
-  - apigee-pre-req
-  - apigee-bootstrap
-
-- name: Construct silent installation configuration file
-  hosts: '{{ hosts }}'
-  strategy: free
-  gather_facts: no
-  vars_files:
-  - ~/.apigee/credentials.yml
-  roles:
-  - apigee-opdk-setup-silent-installation-config
-  tags:
-  - apigee-pre-req
-  - apigee-silent-config
+  - { role: apigee-opdk-setup-apigee-user, tags: ['apigee-user', 'apigee-pre-req'] }
+  - { role: apigee-opdk-setup-os-limits, tags: ['apigee-pre-req', 'apigee-tuning'] }
+  - { role: apigee-opdk-setup-openjdk, tags: ['apigee-pre-req', 'openjdk']}
+  - { role: apigee-opdk-setup-java-home, tags: ['apigee-pre-req', 'java-home']}
+  - { role: apigee-opdk-setup-bootstrap, tags: ['apigee-pre-req', 'apigee-bootstrap'] }
+  - { role: apigee-opdk-setup-silent-installation-config, tags: ['apigee-pre-req', 'apigee-silent-config'] }

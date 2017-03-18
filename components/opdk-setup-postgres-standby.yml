@@ -1,9 +1,0 @@
----
-- name: Setting up Postgres standby
-  hosts: '{{ hosts }}'
-  gather_facts: no
-  serial: 1
-  roles:
-  - apigee-opdk-setup-postgres-standby
-  tags:
-  - pgstandby

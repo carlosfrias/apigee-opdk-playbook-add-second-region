@@ -1,9 +1,0 @@
----
-- name: Setting up Postgres master
-  hosts: '{{ hosts }}'
-  gather_facts: no
-  serial: 1
-  roles:
-  - apigee-opdk-setup-postgres-master
-  tags:
-  - pgmaster

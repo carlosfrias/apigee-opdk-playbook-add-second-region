@@ -1,7 +1,0 @@
----
-- hosts: '{{ hosts }}'
-  gather_facts: no
-  roles:
-  - apigee-opdk-setup-status
-  tags:
-  - status
